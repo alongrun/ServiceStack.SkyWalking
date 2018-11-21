@@ -18,11 +18,11 @@ namespace ServiceStack.SkyWalking
         {
             LoadConfigurationSetting();
             LogManager.SetLoggerFactory(new DebugLoggerFactoryAdapter());
-           // List<ITracingDiagnosticProcessor> ls=new List<ITracingDiagnosticProcessor>();
-           // ls.Add(new HttpClientDiagnosticProcessor());
+            List<ITracingDiagnosticProcessor> ls=new List<ITracingDiagnosticProcessor>();
+            ls.Add(new CapDiagnosticProcessor());
             
             
-         //   _observer=new TracingDiagnosticProcessorObserver(ls);
+            _observer=new TracingDiagnosticProcessorObserver(ls);
             AsyncContext.Run(async () => await StartAsync());
         }
 

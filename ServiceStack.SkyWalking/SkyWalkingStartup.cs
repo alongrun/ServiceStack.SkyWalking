@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using SkyWalking.Boot;
@@ -28,6 +29,7 @@ namespace ServiceStack.SkyWalking
 
         private async Task StartAsync()
         {
+            DiagnosticListener.AllListeners.Subscribe(_observer);
             await GrpcConnectionManager.Instance.ConnectAsync(TimeSpan.FromSeconds(3));
             await ServiceManager.Instance.Initialize();
         }

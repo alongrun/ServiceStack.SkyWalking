@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNetCore.CAP.Diagnostics;
 using DotNetCore.CAP.Infrastructure;
+using SkyWalking.Config;
 using SkyWalking.Context;
 using SkyWalking.Context.Tag;
 using SkyWalking.Context.Trace;
@@ -93,9 +94,12 @@ namespace ServiceStack.SkyWalking
                         }
                     }
                 }
-                var span = ContextManager.CreateEntrySpan(operationName, carrier);
+                var span = ContextManager.CreateEntrySpan($"{AgentConfig.ApplicationCode} {operationName}", carrier);
+              
                 span.SetComponent(ComponentsDefine.CAP);
+               
                 span.SetLayer(SpanLayer.MQ);
+                
                 Tags.MqTopic.Set(span, eventData.BrokerTopicName);
             }
 
